@@ -1,0 +1,51 @@
+<div class="tertiary-btn-wrapper">
+  <button class="tertiary-btn">
+    <span (click)="openModal()">Tertiary Btn</span>
+
+    <span
+      *ngIf="submittedOptions.length > 0"
+      class="count-badge"
+      (click)="openModal()"
+    >
+      ({{ submittedOptions.length }})
+    </span>
+
+    <span
+      *ngIf="submittedOptions.length > 0"
+      class="clear-icon"
+      (click)="clearSelections($event)"
+    >
+      ×
+    </span>
+  </button>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="isModalOpen" (click)="handleBackdropClick()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="closeModal()">×</span>
+      <h2>Select Options</h2>
+
+      <!-- Dropdown -->
+      <div class="dropdown" [class.open]="dropdownOpen">
+        <button class="dropdown-btn" (click)="toggleDropdown()">Choose Options</button>
+        <div class="dropdown-content" *ngIf="dropdownOpen">
+          <label *ngFor="let option of options">
+            <input
+              type="checkbox"
+              [value]="option"
+              (change)="onOptionChange($event)"
+              [checked]="currentSelection.includes(option)"
+            />
+            {{ option }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Modal Buttons -->
+      <div class="modal-actions">
+        <button class="submit-btn" (click)="submitForm()">Submit</button>
+        <button class="clear-btn" (click)="clearSelections()">Clear</button>
+      </div>
+    </div>
+  </div>
+</div>
